@@ -1,6 +1,6 @@
 Loop {
 	SetTitleMatchMode RegEx
-	WinWaitActive, Continue in.*minutes
+	WinWait, Continue in.*minutes
 	if ErrorLevel
 	{
 		MsgBox, WinWait timed out.
