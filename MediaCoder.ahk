@@ -1,16 +1,20 @@
 Loop {
 	SetTitleMatchMode RegEx
-	WinWait, Continue in.*minutes
-	if ErrorLevel
+	WinWait, Continue in.*minutes	
+	
+	WinGetText, WindowText
+	RegExMatch(WindowText, "math:\s(\d+)\s*([-\+])\s*(\d+)", Expression)
+	
+	if(Expression2 = "-")
+		Result := Expression1 - Expression3
+	else if (Expression2 = "+")
+		Result := Expression1 + Expression3
+	else
 	{
-		MsgBox, WinWait timed out.
+		MsgBox, Unknown operator ""%Expression2%""., 16, Error
 		return
 	}
-	else {
-		WinGetText, SearchVar  ; The window found above will be used.
-		FoundPos1 := RegExMatch(SearchVar, "math:\s(\d+)\s*\+\s*(\d+)", Operands) ;
-		Result := Operands1+Operands2
-		ControlSetText, Edit2, %Result%
-		ControlClick, Button2
-	}
+	
+	ControlSetText, Edit2, %Result%
+	ControlClick, Button2
 }
